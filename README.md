@@ -16,7 +16,6 @@
 - Solution URL: [Github](https://github.com/ritishDas/fmtest)
 - Live Site URL: [URL](https://ritishdas.github.io/fmtest/)
 
-## My process
 
 ### Built with
 
