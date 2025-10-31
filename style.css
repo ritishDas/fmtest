@@ -7,8 +7,8 @@ body{
 }
 
 button {
-  cursor:pointer;
   all:unset;
+  cursor:pointer;
 }
 
 :root {
@@ -410,6 +410,7 @@ background:var(--primaryh);
     width:50px;
     height:50px;
     border-radius:50%;
+    background:white;
     flex-grow:0;
   }
 .mobileviewdiv {
