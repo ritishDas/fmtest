@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+
+    <title>Frontend Mentor | E-commerce product page</title>
+    <link rel="stylesheet" href="style.css">
+
+  </head>
+  <body>
+
+    <nav class="flex flex-sa flex-ic">
+      <div class="nav-indiv flex flex-ic">
+        <img  onclick="mobilenavhandle(true)" class="navmobilemenu" src="images/icon-menu.svg" alt="images/icon-menu.svg">
+        <img src="images/logo.svg" alt="images/logo.svg">
+        <ul class="flex nav-ul">
+          <li class="flex flex-cl flex-ic"><span>Collection</span><p></p></li>
+          <li class="flex flex-cl flex-ic"><span>Men</span><p></p></li>
+          <li class="flex flex-cl flex-ic"><span>Women</span><p></p></li>
+          <li class="flex flex-cl flex-ic"><span>About</span><p></p></li>
+          <li class="flex flex-cl flex-ic"><span>Contact</span><p></p></li>
+        </ul>
+
+      </div>
+      <div class="flex flex-sa flex-ic nav-btn">
+        <button id="openBtn">
+        </button>
+        <button><img class="profile-pic" src="images/image-avatar.png" alt="images/image-avatar.png"></button>
+      </div>
+    </nav>
+
+<nav class='mobilenav'>
+      <div>
+      <img class="mobilenavclose" src="images/icon-close.svg" onclick="mobilenavhandle(false)" alt="images/icon-close.svg">
+      <ul>
+          <li><span>Collection</span><p></p></li>
+          <li><span>Men</span><p></p></li>
+          <li><span>Women</span><p></p></li>
+          <li><span>About</span><p></p></li>
+          <li><span>Contact</span><p></p></li>
+      </ul>
+      </div>
+</nav>
+
+    <main class="flex flex-jc flex-ic">
+      <div class="view">
+
+      </div>
+      <div class="detail">
+        <h2>SNEAKER COMPANY</h2>
+        <h1>Fall Limited Sneakers</h1>
+        <p>These low-profile sneakers are your perfect casual wear companion. Featuring a durable rubber outer sole, they'll withstand everything the weather can offer.</p>
+        <div class="mobileprice">
+        <div >
+          <span class="price">$125.00</span>
+          <span class="discount">50%</span>
+        </div>
+        <span class="notprice">$250.00</span>
+        </div>
+
+        <div class="flex detail-btns">
+          <div class="counter flex flex-sa flex-ic">
+            <button onclick="counterhandle(false)">
+<svg width="12" height="4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path d="M11.357 3.332A.641.641 0 0 0 12 2.69V.643A.641.641 0 0 0 11.357 0H.643A.641.641 0 0 0 0 .643v2.046c0 .357.287.643.643.643h10.714Z" id="a"/></defs><use fill="#FF7E1B" fill-rule="nonzero" xlink:href="#a"/></svg>
+            </button>
+            <span id='counteramt'>0</span>
+            <button onclick="counterhandle(true)">
+<svg width="12" height="12" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path d="M12 7.023V4.977a.641.641 0 0 0-.643-.643h-3.69V.643A.641.641 0 0 0 7.022 0H4.977a.641.641 0 0 0-.643.643v3.69H.643A.641.641 0 0 0 0 4.978v2.046c0 .356.287.643.643.643h3.69v3.691c0 .356.288.643.644.643h2.046a.641.641 0 0 0 .643-.643v-3.69h3.691A.641.641 0 0 0 12 7.022Z" id="b"/></defs><use fill="#FF7E1B" fill-rule="nonzero" xlink:href="#b"/></svg>
+            </button>
+          </div>
+          <button class="mobileaddtcart flex flex-sa flex-ic" onclick="addTocart(counter.amount)" ><img class="btn-cart-icon" src="images/icon-cart.svg" alt="images/icon-cart.svg"> <span> Add to cart </span> </button>
+        </div>
+
+      </div>
+    </main>
+
+    <div class="cartDiv" id="overlay" >
+      <div id="popup">
+        <h2>Cart</h2>
+        <div class="flex flex-cl flex-ic">
+          <p style="padding:5rem;" class='cartcontent'>Your cart is empty</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:none;" class="viewerdiv flex flex-jc flex-ic">
+    </div>
+
+    <div class="attribution">
+      <h1>
+      Coded by <a href="#">ritishDas</a>.
+      </h1>
+      <h4>
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. </h4>
+    </div>
+  </body>
+  <script src="gardener.js"></script>
+  <script>
+
+  function mobilenavhandle(status) {
+    if(status)fetchElement('.mobilenav').style.display = 'block';
+  else fetchElement('.mobilenav').style.display = 'none';
+  }
+
+
+  const openBtn = fetchElement('#openBtn');
+  const counteramt = fetchElement('#counteramt');
+  const overlay = fetchElement('#overlay');
+  const popup = fetchElement('#popup');
+
+
+      imagePreloader(['images/image-product-1.jpg', 'images/image-product-2.jpg', 'images/image-product-3.jpg', 'images/image-product-4.jpg',]);
+
+
+  class Counter {
+    constructor() {
+      this.amount = 0;
+    }
+
+    inc() {
+      this.amount++;
+    }
+
+    dec() {
+      this.amount>0&&this.amount--;
+    }
+  }
+
+  class Cart {
+    constructor() {
+      this.cartitem = 0;
+    }
+
+    add() {
+      const cartbtn = fetchElement('#openBtn');
+      const cartcontent = fetchElement('.cartcontent')
+      if(!this.cartitem){ replaceElement(cartcontent, gardener(
+        {
+        t:'p',
+        cn:['cartcontent'],
+          txt:'Your cart is empty',
+          attr:{
+            style:'padding:5rem;'
+          }
+        }
+      ));
+        replaceElement(cartbtn, gardener({
+        t:'button',
+          attr:{
+            id:'openBtn'
+          },
+           onclick:() => {
+      overlay.style.display = 'block';
+    },
+          children:[
+            {
+              t:'img',
+              cn:['cart-icon'],
+              attr:{
+                src:'images/icon-cart.svg',
+                alt:'images/icon-cart.svg'
+              }
+
+            }
+          ]
+        }));
+      }
+      
+      else { 
+        replaceElement(cartcontent, gardener({
+        t:'div',
+        cn:['flex', 'flex-cl', 'flex-ic', 'cartcontent'],
+        children:[
+          {
+            t:'div',
+            cn:["flex", "flex-sa", "flex-ic", "cartitem"],
+            children: [
+              {
+                t:'img',
+                cn:['cartitem-itm-thumb'],
+                attr:{
+                  src:'images/image-product-1-thumbnail.jpg',
+                  alt:'images/image-product-1-thumbnail.jpg'
+                }
+              },
+              {
+                t:'div',
+                children:[
+                  {
+                    t:'p',
+                    txt:'Fall Limited Edition Sneakers'
+                  },
+                  {
+                    t:'span',
+                    children:[
+                      {
+                        t:'span',
+                        txt:`$125.00 x ${this.cartitem}`
+                      },
+                      {
+                        t:'b',
+                        txt:`$${this.cartitem*125}.00`
+                      }
+                    ],
+                  }
+
+                ]
+              },
+              {
+                t:'button',
+                onclick:clearCart,
+                cn:['cartitem-icon'],
+                children:[
+                  {
+                    t:'img',
+                    attr:{
+                      src:'images/icon-delete.svg',
+                      alt:'images/icon-delete.svg'
+                    }
+                  }
+                ]
+              },
+            ]
+          },
+          {
+            t:'button',
+            cn:['checkoutbtn'],
+                txt:'Checkout'
+          }
+
+        ]
+      }
+      )),
+      replaceElement(cartbtn, gardener(
+{
+  "t": "button",
+  "attr": {
+    "id": "openBtn"
+  },
+           onclick:() => {
+      overlay.style.display = 'block';
+    },
+  "children": [
+    {
+      "t": "img",
+      "cn": [
+        "cart-icon"
+      ],
+      "attr": {
+        "src": "images/icon-cart.svg",
+        "alt": "images/icon-cart.svg"
+      }
+    },
+              {
+                t:'span',
+                attr:{style:"text-align:center;"},
+                txt:this.cartitem
+              }
+  ]
+}
+        ))
+      }
+    }
+    
+    del() {
+      this.cartitem = 0;
+      this.add();
+    }
+
+  }
+  const counter = new Counter();
+
+  function counterhandle(increase) {
+    if(increase) counter.inc()
+    else counter.dec()
+    counteramt.innerText = counter.amount;
+  }
+
+
+
+    // Close only when clicking outside popup
+    overlay.addEventListener('pointerdown', (e) => {
+    console.log(e.target)
+      if (!popup.contains(e.target)) {
+        overlay.style.display = 'none';
+      }
+    });
+
+  const cart = new Cart();
+  cart.add();
+
+
+  function addTocart(num) {
+    cart.cartitem += num;
+    cart.add()
+  }
+  
+  function clearCart() {
+    cart.del();
+  }
+
+  function viewbox(index) {
+    if(index<1 || index>4) return;
+    const view = fetchElement('.view');
+    replaceElement(view, gardener({
+      t:'div',
+      cn:['view'],
+      children:[
+        {
+        t:'div',
+          cn:["mobileviewdiv"],
+        children:[
+            {
+              "t": "button",
+                  onclick: ()=>{viewbox(index-1)},
+              "cn": [
+                "mobildeviewbtn",
+                "flex",
+                "flex-ic",
+                "flex-jc"
+              ],
+              "attr": {
+                "style": "transform:translateX(-190px);"
+              },
+              "children": [
+                {
+                  "t": "svg",
+                  "attr": {
+                    "width": "12",
+                    "height": "18",
+                    "xmlns": "http://www.w3.org/2000/svg"
+                  },
+                  "children": [
+                    {
+                      "t": "path",
+                      "attr": {
+                        "d": "M11 1 3 9l8 8",
+                        "stroke": "#1D2026",
+                        "stroke-width": "3",
+                        "fill": "none",
+                        "fill-rule": "evenodd"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+       {
+          t:'img',
+          cn:['bigpic'],
+          onclick:()=>{ if (window.innerWidth > 768) viewerdivhandle(true, index)},
+          attr:{
+          src:`images/image-product-${index}.jpg`,
+          alt:`images/image-product-${index}.jpg`,
+        }
+        }, 
+            {
+              "t": "button",
+              "cn": [
+                "mobildeviewbtn",
+                "flex",
+                "flex-ic",
+                "flex-jc"
+              ],
+                  onclick: ()=>{viewbox(index+1)},
+              "attr": {
+                "style": "transform:translateX(190px);"
+              },
+              "children": [
+                {
+                  "t": "svg",
+                  "attr": {
+                    "width": "13",
+                    "height": "18",
+                    "xmlns": "http://www.w3.org/2000/svg"
+                  },
+                  "children": [
+                    {
+                      "t": "path",
+                      "attr": {
+                        "d": "m2 1 8 8-8 8",
+                        "stroke": "#1D2026",
+                        "stroke-width": "3",
+                        "fill": "none",
+                        "fill-rule": "evenodd"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+
+        ]
+        }
+        ,
+        {
+          t:'div',
+          cn:['thumbnaildiv', 'flex', 'flex-ic'],
+          children:[1,2,3,4].map(entry => {
+            return {
+              t:'button',
+              onclick:()=>{viewbox(entry)},
+              children:[
+                {
+                  t:'img',
+                  attr:{
+                    src:`images/image-product-${entry}-thumbnail.jpg`,
+                    alt:`images/image-product-${entry}-thumbnail.jpg`,
+                    style:entry === index && 'opacity:0.5; border:4px solid hsl(26, 100%, 55%);'
+                  }
+
+                }
+              ]
+            }
+          })
+        }
+      ]
+    }));
+
+  }
+
+  viewbox(1)
+
+  function viewerdivhandle(status, index) {
+    if(index<1 || index>4) return;
+    const viewerdiv = fetchElement('.viewerdiv');
+    if(!status) {
+      viewerdiv.style.display='none';
+      return;
+    }
+
+    replaceElement(viewerdiv, gardener({
+  "t": "div",
+  "cn": [
+    "viewerdiv",
+    "flex",
+    "flex-jc",
+    "flex-ic"
+  ],
+  "children": [
+    {
+      "t": "div",
+      "children": [
+        {
+          "t": "div",
+          "cn": [
+            "viewerdiv-btn",
+            "flex"
+          ],
+          "children": [
+            {
+              "t": "button",
+                  onclick: ()=>{viewerdivhandle(false)},
+              "children": [
+                {
+                  "t": "svg",
+                  "attr": {
+                    "width": "14",
+                    "height": "15",
+                    "xmlns": "http://www.w3.org/2000/svg"
+                  },
+                  "children": [
+                    {
+                      "t": "path",
+                      "attr": {
+                        "d": "m11.596.782 2.122 2.122L9.12 7.499l4.597 4.597-2.122 2.122L7 9.62l-4.595 4.597-2.122-2.122L4.878 7.5.282 2.904 2.404.782l4.595 4.596L11.596.782Z",
+                        "fill": "#ffffff",
+                        "fill-rule": "evenodd"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "t": "div",
+          "cn": [
+            "flex",
+            "flex-ic",
+            "viewerdiv-main"
+          ],
+          "children": [
+            {
+              "t": "button",
+                  onclick: ()=>{viewerdivhandle(true, index-1)},
+              "cn": [
+                "flex",
+                "flex-ic",
+                "flex-jc"
+              ],
+              "attr": {
+                "style": "transform:translateX(20px);"
+              },
+              "children": [
+                {
+                  "t": "svg",
+                  "attr": {
+                    "width": "12",
+                    "height": "18",
+                    "xmlns": "http://www.w3.org/2000/svg"
+                  },
+                  "children": [
+                    {
+                      "t": "path",
+                      "attr": {
+                        "d": "M11 1 3 9l8 8",
+                        "stroke": "#1D2026",
+                        "stroke-width": "3",
+                        "fill": "none",
+                        "fill-rule": "evenodd"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "t": "img",
+              "cn": [
+                "viewerdiv-main-img"
+              ],
+              "attr": {
+                    "src": `images/image-product-${index}.jpg`,
+                    "alt": `images/image-product-${index}.jpg`,
+              }
+            },
+            {
+              "t": "button",
+              "cn": [
+                "flex",
+                "flex-ic",
+                "flex-jc"
+              ],
+                  onclick: ()=>{viewerdivhandle(true, index+1)},
+              "attr": {
+                "style": "transform:translateX(-20px);"
+              },
+              "children": [
+                {
+                  "t": "svg",
+                  "attr": {
+                    "width": "13",
+                    "height": "18",
+                    "xmlns": "http://www.w3.org/2000/svg"
+                  },
+                  "children": [
+                    {
+                      "t": "path",
+                      "attr": {
+                        "d": "m2 1 8 8-8 8",
+                        "stroke": "#1D2026",
+                        "stroke-width": "3",
+                        "fill": "none",
+                        "fill-rule": "evenodd"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "t": "div",
+              cn:["flex", "flex-ic", "flex-jc", "viewerdiv-selector"],
+              children:[1,2,3,4].map(entry => {
+            return {
+              t:'button',
+              onclick:()=>{viewerdivhandle(true, entry)},
+                  attr:{
+                    style:entry === index && 'border:4px solid hsl(26, 100%, 55%);'
+                  },
+              children:[
+                {
+                  t:'img',
+                  attr:{
+                    src:`images/image-product-${entry}-thumbnail.jpg`,
+                    alt:`images/image-product-${entry}-thumbnail.jpg`,
+                  }
+
+                }
+              ]
+            }
+          }
+              )
+        }
+      ]
+    }
+  ]
+}));
+
+
+  }
+
+ // parser(fetchElement('.viewerdiv'));
+</script>
+</html>
